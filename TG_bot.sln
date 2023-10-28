@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TG_bot", "TG_bot.csproj", "{783BFDF4-BB98-4E04-9E61-B82D0790EE27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stringTest", "..\stringTest\stringTest.csproj", "{E31E97EC-FB3B-4D6E-B878-0D515315A09B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{783BFDF4-BB98-4E04-9E61-B82D0790EE27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783BFDF4-BB98-4E04-9E61-B82D0790EE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783BFDF4-BB98-4E04-9E61-B82D0790EE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783BFDF4-BB98-4E04-9E61-B82D0790EE27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E31E97EC-FB3B-4D6E-B878-0D515315A09B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E31E97EC-FB3B-4D6E-B878-0D515315A09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E31E97EC-FB3B-4D6E-B878-0D515315A09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E31E97EC-FB3B-4D6E-B878-0D515315A09B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6435696D-1941-4C12-9870-128379414AD4}
+	EndGlobalSection
+EndGlobal
