@@ -18,12 +18,14 @@ using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using File = Telegram.Bot.Types.File;
 
 namespace TG_bot
 {
-    internal class Program
+    public class Program
     {
         static bool isInnExpected = false;
+        static bool isInnExpectedPDF = false;
         static async Task Main(string[] args)
         {
             TelegramBotClient botClient = null;
@@ -52,10 +54,10 @@ namespace TG_bot
                 await Task.Delay(-1);
             }
         }
-        static string GetNameAndAddressOfACompanyByINN(string inn)
+        public static string GetNameAndAddressOfACompanyByINN(string inn)
         {
             string result = "";
-            string[] innArray = inn.Split(','); 
+            string[] innArray = inn.Split(',');
             if (isInnExpected == true)
             {
                 foreach (string i in innArray)
@@ -100,6 +102,62 @@ namespace TG_bot
             isInnExpected = false;
             return result;
         }
+
+        public static string GetPDFFileByINN(string inn)
+        {
+            string downloadedFilePath = null;
+
+            try
+            {
+                string directoryPath = "C:\\Users\\Пользователь\\Desktop\\Visual_Studio\\Projects_C#\\TG_bot\\PDF_Files";
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+                var chromeOptions = new ChromeOptions();
+                chromeOptions.AddUserProfilePreference("download.default_directory", directoryPath);
+                chromeOptions.AddArgument("--headless");
+                IWebDriver driver = new ChromeDriver(chromeOptions);
+                driver.Navigate().GoToUrl("https://egrul.nalog.ru/index.html");
+
+                IWebElement element1 = driver.FindElement(By.Id("query"));
+                element1.SendKeys(inn);
+
+                IWebElement searchButton = driver.FindElement(By.Id("btnSearch"));
+                searchButton.Click();
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
+                IWebElement searchResult = wait.Until(d =>
+                {
+                    var element = d.FindElement(By.CssSelector(".res-text"));
+                    return element.Displayed ? element : null;
+                });
+
+                IWebElement downloadPdfButton = driver.FindElement(By.ClassName("btn-with-icon btn-excerpt op-excerpt"));
+                downloadPdfButton.Click();
+                WebDriverWait wait1 = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+
+                downloadedFilePath = wait1.Until(driver1 =>
+                {
+                    string[] files1 = Directory.GetFiles(directoryPath);
+                    if (files1.Length > 0)
+                    {
+                        return files1[0]; // Вернуть путь к первому скачанному файлу
+                    }
+                    return null;
+                });
+
+                // Другой ваш код
+
+            }
+            catch (Exception ex)
+            {
+                return inn + ": Нет такого ИНН\n\n";
+            }
+
+            isInnExpectedPDF = false;
+            return downloadedFilePath;
+        }
         static async Task UpdateHandler(ITelegramBotClient botClient, Update update, CancellationToken token)
         {
             try
@@ -112,6 +170,27 @@ namespace TG_bot
                 if (isInnExpected)
                 {
                     await botClient.SendTextMessageAsync(update.Message.Chat, GetNameAndAddressOfACompanyByINN(update.Message.Text));
+                }
+
+                if (isInnExpectedPDF)
+                {
+                    string pdfFilePath = GetPDFFileByINN(update.Message.Text);
+                    if (!string.IsNullOrEmpty(pdfFilePath))
+                    {
+                        using (var fileStream = new FileStream(pdfFilePath, FileMode.Open, FileAccess.Read))
+                        {
+                            //var input = new InputFileStream("video.mp4");
+
+                            //input.FileName = "example.pdf"; // Задайте имя файла, которое будет видеть пользователь
+
+                            await botClient.SendDocumentAsync(update.Message.Chat.Id, new InputFileStream(fileStream, pdfFilePath));
+                        }
+                    }
+                    else
+                    {
+                        await botClient.SendTextMessageAsync(update.Message.Chat.Id, "Нет такого ИНН");
+                    }
+                    //await botClient.SendDocumentAsync(update.Message.Chat,)
                 }
 
                 try
@@ -145,6 +224,12 @@ namespace TG_bot
                             var chat = message.Chat;
                             await botClient.SendTextMessageAsync(chat, "Введите ИНН, интересующей Вас компании( в случае ввода нескольких ИНН ввод через запятую): ");
                             isInnExpected = true;
+                        }
+                        if (message.Text == "/egrul")
+                        {
+                            var chat = message.Chat;
+                            await botClient.SendTextMessageAsync(chat, "Введите ИНН, интересующей Вас компании( в случае ввода нескольких ИНН ввод через запятую): ");
+                            isInnExpectedPDF = true;
                         }
                     }
                 }

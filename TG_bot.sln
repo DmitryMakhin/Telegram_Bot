@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TG_bot", "TG_bot.csproj", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stringTest", "..\stringTest\stringTest.csproj", "{E31E97EC-FB3B-4D6E-B878-0D515315A09B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TG_BotTest", "..\TG_BotTest\TG_BotTest.csproj", "{6C46FE49-CB81-4791-8881-8EE13382B72D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E31E97EC-FB3B-4D6E-B878-0D515315A09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E31E97EC-FB3B-4D6E-B878-0D515315A09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E31E97EC-FB3B-4D6E-B878-0D515315A09B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C46FE49-CB81-4791-8881-8EE13382B72D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C46FE49-CB81-4791-8881-8EE13382B72D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C46FE49-CB81-4791-8881-8EE13382B72D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C46FE49-CB81-4791-8881-8EE13382B72D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
