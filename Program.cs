@@ -55,7 +55,7 @@ namespace TG_bot
         static string GetNameAndAddressOfACompanyByINN(string inn)
         {
             string result = "";
-            string[] innArray = inn.Split(','); // Разделяем входную строку на массив ИНН
+            string[] innArray = inn.Split(','); 
             if (isInnExpected == true)
             {
                 foreach (string i in innArray)
@@ -145,10 +145,6 @@ namespace TG_bot
                             var chat = message.Chat;
                             await botClient.SendTextMessageAsync(chat, "Введите ИНН, интересующей Вас компании( в случае ввода нескольких ИНН ввод через запятую): ");
                             isInnExpected = true;
-                        }
-                        if (message.Text == "/full")
-                        {
-
                         }
                     }
                 }
